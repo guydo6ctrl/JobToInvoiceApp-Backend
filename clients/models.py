@@ -1,7 +1,11 @@
 from django.db import models
+from config import settings
 
 
 class Client(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="clients"
+    )
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=20, blank=True)

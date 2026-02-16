@@ -1,3 +1,12 @@
 from django.shortcuts import render
+from rest_framework import viewsets, permissions
+from clients.models import Client
+from clients.serializers import ClientSerializer
 
-# Create your views here.
+
+class ClientViewSet(viewsets.ModelViewSet):
+    serializer_class = ClientSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        return Client.objects.filter(user=self.request.user)
