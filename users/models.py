@@ -6,5 +6,5 @@ class User(AbstractUser):
     id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
+    # USERNAME_FIELD = "email"
+    # REQUIRED_FIELDS = ["username"]
