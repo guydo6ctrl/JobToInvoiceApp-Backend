@@ -11,4 +11,5 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth/", include("rest_framework.urls")),
     path("clients/", include("clients.urls")),
+    path("jobs/", include("jobs.urls")),
 ]
