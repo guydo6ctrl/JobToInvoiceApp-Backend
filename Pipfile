@@ -11,8 +11,10 @@ djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 pytz = "*"
 sqlparse = "*"
+django-environ = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "3.12"
