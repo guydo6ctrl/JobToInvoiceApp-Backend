@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "jobs",
     "invoices",
     "quotes",
+    "core",
 ]
 
 REST_FRAMEWORK = {
