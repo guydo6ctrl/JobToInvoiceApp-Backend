@@ -10,10 +10,10 @@ class QuoteViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Quote.objects.filter(job__client__user=self.request.user)
+        return Quote.objects.filter(client__user=self.request.user)
 
     def perform_create(self, serializer):
-        job = serializer.validated_data["job"]
-        if job.client.user != self.request.user:
+        client = serializer.validated_data["client"]
+        if client.user != self.request.user:
             raise PermissionDenied("Not your client")
         serializer.save()

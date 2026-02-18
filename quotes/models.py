@@ -5,13 +5,6 @@ from core.models import BaseLineItem, Status
 
 class Quote(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="quotes")
-    job = models.ForeignKey(
-        "jobs.Job",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="invoices",
-    )
     issue_date = models.DateField()
     expiry_date = models.DateField()
     status = models.CharField(
