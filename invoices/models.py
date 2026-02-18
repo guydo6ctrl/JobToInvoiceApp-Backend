@@ -1,7 +1,14 @@
 from django.db import models
-from core.models import BaseLineItem, Status
+from core.models import BaseLineItem
 from clients.models import Client
 from quotes.models import Quote
+
+
+class InvoiceStatus(models.TextChoices):
+    DRAFT = "draft", "Draft"
+    SENT = "sent", "Sent"
+    PAID = "paid", "Paid"
+    CANCELLED = "cancelled", "Cancelled"
 
 
 class Invoice(models.Model):
@@ -18,7 +25,7 @@ class Invoice(models.Model):
     due_date = models.DateField()
     issue_date = models.DateField()
     status = models.CharField(
-        max_length=20, choices=Status.choices, default=Status.DRAFT
+        max_length=20, choices=InvoiceStatus.choices, default=InvoiceStatus.DRAFT
     )
 
 

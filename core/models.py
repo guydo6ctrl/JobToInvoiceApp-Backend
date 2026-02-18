@@ -18,9 +18,3 @@ class BaseLineItem(models.Model):
     class Meta:
         abstract = True
 
-
-class Status(models.TextChoices):
-    DRAFT = "draft", "Draft"
-    SENT = "sent", "Sent"
-    PAID = "paid", "Paid"
-    CANCELLED = "cancelled", "Cancelled"
