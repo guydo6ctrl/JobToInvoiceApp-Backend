@@ -1,12 +1,12 @@
 from django.db import models
-from clients.models import Client
+from users.models import User
 from core.models import LineItemType
 
 
 class ClientItemTemplate(models.Model):
 
-    client = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name="item_templates"
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="item_templates"
     )
 
     name = models.CharField(max_length=150)

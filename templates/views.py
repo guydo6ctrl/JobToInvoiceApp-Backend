@@ -8,4 +8,4 @@ class ClientItemTemplateViewSet(viewsets.ModelViewSet):
     queryset = ClientItemTemplate.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(client=self.request.user)
+        serializer.save(user=self.request.user)
