@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Quote
+from .models import Quote, QuoteLineItem
 
 
 class QuoteSerializer(serializers.ModelSerializer):
@@ -12,5 +12,6 @@ class QuoteSerializer(serializers.ModelSerializer):
 
 
 class QuoteLineItemSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = QuoteItem
+    class Meta:
+        model = QuoteLineItem
+        fields = ["name", "description", "quantity", "unit_price", "type"]
