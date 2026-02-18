@@ -3,6 +3,9 @@ from .models import Quote
 
 
 class QuoteSerializer(serializers.ModelSerializer):
+    issue_date = serializers.DateField(format="%d-%m-%Y")
+    issue_date = serializers.DateField(format="%d-%m-%Y")
+
     class Meta:
         model = Quote
-        fields = ["client", "expiry_date", "issue_date", "line_items", "status"]
+        fields = ["client", "issue_date", "expiry_date", "line_items", "status"]

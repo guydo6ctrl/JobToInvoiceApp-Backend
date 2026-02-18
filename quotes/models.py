@@ -8,7 +8,7 @@ class Quote(models.Model):
     issue_date = models.DateField()
     expiry_date = models.DateField()
     status = models.CharField(
-        max_length=20, choices=Status.choices, default=Status.DRAFT
+        # max_length=20, choices=Status.choices, default=Status.DRAFT
     )
 
 

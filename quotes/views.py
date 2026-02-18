@@ -13,7 +13,7 @@ class QuoteViewSet(viewsets.ModelViewSet):
         return Quote.objects.filter(client__user=self.request.user)
 
     def perform_create(self, serializer):
-        client = serializer.validated_data["client"]
-        if client.user != self.request.user:
+        client_id = serializer.validated_data["client"]
+        if client_id.user != self.request.user:
             raise PermissionDenied("Not your client")
         serializer.save()
