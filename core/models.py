@@ -1,11 +1,10 @@
 from django.db import models
 
 
-
 class LineItemType(models.TextChoices):
-    LABOUR = "labour", "Labour"
-    MATERIALS = "materials", "Materials"
-    MISCELLANEOUS = "miscellaneous", "Miscellaneous"
+    LABOUR = "Labour", "Labour"
+    MATERIALS = "Materials", "Materials"
+    MISCELLANEOUS = "Miscellaneous", "Miscellaneous"
 
 
 class BaseLineItem(models.Model):
@@ -19,6 +18,3 @@ class BaseLineItem(models.Model):
 
     class Meta:
         abstract = True
-
-
-
