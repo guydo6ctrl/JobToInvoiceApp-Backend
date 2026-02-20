@@ -15,6 +15,7 @@ pyjwt = "*"
 python-dotenv = "*"
 pytz = "*"
 sqlparse = "*"
+django-filter = "*"
 
 [dev-packages]
 
