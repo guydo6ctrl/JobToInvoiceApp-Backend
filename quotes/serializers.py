@@ -15,7 +15,15 @@ class QuoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quote
-        fields = ["id", "client", "issue_date", "expiry_date", "line_items", "status"]
+        fields = [
+            "id",
+            "client",
+            "description",
+            "issue_date",
+            "expiry_date",
+            "line_items",
+            "status",
+        ]
 
     def create(self, validated_data):
 

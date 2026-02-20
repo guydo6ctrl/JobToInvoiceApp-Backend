@@ -12,6 +12,7 @@ class QuoteStatus(models.TextChoices):
 
 class Quote(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="quotes")
+    description = models.TextField(blank=True)
     issue_date = models.DateField()
     expiry_date = models.DateField()
     status = models.CharField(
