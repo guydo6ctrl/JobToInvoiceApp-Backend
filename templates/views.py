@@ -8,5 +8,8 @@ class ClientItemTemplateViewSet(viewsets.ModelViewSet):
     queryset = ClientItemTemplate.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        return ClientItemTemplate.objects.filter(user=self.request.user)
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

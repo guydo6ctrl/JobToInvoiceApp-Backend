@@ -10,10 +10,13 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Invoice.objects.filter(source_quote__client__user=self.request.user)
+        return Invoice.objects.filter(client__user=self.request.user)
 
     def perform_create(self, serializer):
-        source_quote = serializer.validated_data["source_quote"]
-        if source_quote.client.user != self.request.user:
-            raise PermissionDenied("Not your client")
+        source_quote = serializer.validated_data.get("source_quote")
+
+        if source_quote:
+            if source_quote.client.user != self.request.user:
+                raise PermissionDenied("Not your client")
+
         serializer.save()
