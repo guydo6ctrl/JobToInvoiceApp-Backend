@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from clients.models import Client
 from .models import Quote, QuoteLineItem
 
 
@@ -8,7 +10,19 @@ class QuoteLineItemSerializer(serializers.ModelSerializer):
         fields = ["name", "description", "quantity", "unit_price"]
 
 
+class QuoteClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = ["id", "name"]
+
+
 class QuoteSerializer(serializers.ModelSerializer):
+    client = QuoteClientSerializer(read_only=True)
+    client_id = serializers.PrimaryKeyRelatedField(
+        queryset=Client.objects.all(),
+        write_only=True,
+        source="client",
+    )
     issue_date = serializers.DateField(format="%d-%m-%Y")
     expiry_date = serializers.DateField(format="%d-%m-%Y")
     line_items = QuoteLineItemSerializer(many=True)
@@ -18,6 +32,7 @@ class QuoteSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "client",
+            "client_id",
             "description",
             "issue_date",
             "expiry_date",
