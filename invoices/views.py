@@ -10,7 +10,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Invoice.objects.filter(client__user=self.request.user)
+        return Invoice.objects.filter(client__user=self.request.user, archived=False)
 
     def perform_create(self, serializer):
         source_quote = serializer.validated_data.get("source_quote")

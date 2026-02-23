@@ -29,6 +29,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "due_date",
             "line_items",
             "status",
+            "archived",
         ]
 
     def create(self, validated_data):

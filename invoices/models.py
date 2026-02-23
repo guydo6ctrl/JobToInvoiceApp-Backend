@@ -27,6 +27,7 @@ class Invoice(models.Model):
     status = models.CharField(
         max_length=20, choices=InvoiceStatus.choices, default=InvoiceStatus.DRAFT
     )
+    archived = models.BooleanField(default=False)
 
 
 class InvoiceLineItem(BaseLineItem):
