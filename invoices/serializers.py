@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Invoice, InvoiceLineItem
+from quotes.models import Quote
 
 
 class InvoiceLineItemSerializer(serializers.ModelSerializer):
@@ -10,7 +11,7 @@ class InvoiceLineItemSerializer(serializers.ModelSerializer):
 
 class InvoiceSerializer(serializers.ModelSerializer):
     source_quote = serializers.PrimaryKeyRelatedField(
-        queryset=Invoice.objects.all(),
+        queryset=Quote.objects.all(),
         required=False,
         allow_null=True,
     )
