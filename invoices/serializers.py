@@ -24,6 +24,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "client",
+            "job",
             "source_quote",
             "issue_date",
             "due_date",

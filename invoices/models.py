@@ -1,4 +1,5 @@
 from django.db import models
+from jobs.models import Job
 from core.models import BaseLineItem
 from clients.models import Client
 from quotes.models import Quote
@@ -14,6 +15,9 @@ class InvoiceStatus(models.TextChoices):
 class Invoice(models.Model):
     client = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name="invoices"
+    )
+    job = models.ForeignKey(
+        Job, on_delete=models.SET_NULL, null=True, blank=True, related_name="invoices"
     )
     source_quote = models.ForeignKey(
         Quote,
