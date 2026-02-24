@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from invoices.utils import generate_invoice_number
 from .models import Invoice, InvoiceLineItem
 from clients.models import Client
 from quotes.models import Quote
@@ -36,6 +38,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         model = Invoice
         fields = [
             "id",
+            "number",
             "client",
             "client_id",
             "job",
@@ -46,10 +49,14 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "status",
             "archived",
         ]
+        read_only_fields = ["number"]
 
     def create(self, validated_data):
 
         line_items_data = validated_data.pop("line_items", [])
+
+        validated_data["number"] = generate_invoice_number()
+
         invoice = Invoice.objects.create(**validated_data)
 
         for item_data in line_items_data:

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from jobs.utils import generate_job_number
 from clients.models import Client
 from .models import Job
 
@@ -22,6 +23,7 @@ class JobSerializer(serializers.ModelSerializer):
         model = Job
         fields = [
             "id",
+            "number",
             "client",
             "client_id",
             "source_quote",
@@ -30,3 +32,11 @@ class JobSerializer(serializers.ModelSerializer):
             "date_created",
             "status",
         ]
+        read_only_fields = ["number"]
+
+    def create(self, validated_data):
+        validated_data["number"] = generate_job_number()
+
+        job = Job.objects.create(**validated_data)
+
+        return job

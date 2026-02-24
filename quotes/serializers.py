@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from quotes.utils import generate_quote_number
 from clients.models import Client
 from .models import Quote, QuoteLineItem
 
@@ -31,6 +32,7 @@ class QuoteSerializer(serializers.ModelSerializer):
         model = Quote
         fields = [
             "id",
+            "number",
             "client",
             "client_id",
             "description",
@@ -39,10 +41,14 @@ class QuoteSerializer(serializers.ModelSerializer):
             "line_items",
             "status",
         ]
+        read_only_fields = ["number"]
 
     def create(self, validated_data):
 
         line_items_data = validated_data.pop("line_items", [])
+
+        validated_data["number"] = generate_quote_number()
+
         quote = Quote.objects.create(**validated_data)
 
         for item_data in line_items_data:

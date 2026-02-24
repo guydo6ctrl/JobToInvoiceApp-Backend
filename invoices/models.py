@@ -13,9 +13,11 @@ class InvoiceStatus(models.TextChoices):
 
 
 class Invoice(models.Model):
+    number = models.CharField(max_length=20, unique=True, db_index=True)
     client = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name="invoices"
     )
+    date_created = models.DateTimeField(auto_now_add=True)
     job = models.ForeignKey(
         Job, on_delete=models.SET_NULL, null=True, blank=True, related_name="invoices"
     )
