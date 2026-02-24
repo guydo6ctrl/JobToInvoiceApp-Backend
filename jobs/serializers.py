@@ -12,6 +12,8 @@ class JobClientSerializer(serializers.ModelSerializer):
 
 
 class JobSerializer(serializers.ModelSerializer):
+    quote_number = serializers.CharField(source="source_quote.number", read_only=True)
+
     client = JobClientSerializer(read_only=True)
     client_id = serializers.PrimaryKeyRelatedField(
         queryset=Client.objects.all(),
@@ -27,12 +29,13 @@ class JobSerializer(serializers.ModelSerializer):
             "client",
             "client_id",
             "source_quote",
+            "quote_number",
             "title",
             "description",
             "date_created",
             "status",
         ]
-        read_only_fields = ["number"]
+        read_only_fields = ["number", "quote_number"]
 
     def create(self, validated_data):
         validated_data["number"] = generate_job_number()
