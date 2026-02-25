@@ -32,6 +32,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True,
     )
+    status_display = serializers.CharField(source="get_status_display", read_only=True)
     issue_date = serializers.DateField(format="%d-%m-%Y")
     due_date = serializers.DateField(format="%d-%m-%Y")
     line_items = InvoiceLineItemSerializer(many=True)
@@ -50,6 +51,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "due_date",
             "line_items",
             "status",
+            "status_display",
             "archived",
         ]
         read_only_fields = ["number"]

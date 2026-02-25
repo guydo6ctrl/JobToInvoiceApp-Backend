@@ -8,7 +8,8 @@ from .models import Quote, QuoteLineItem
 class QuoteLineItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuoteLineItem
-        fields = ["name", "description", "quantity", "unit_price"]
+        fields = ["id", "name", "description", "quantity", "unit_price"]
+        read_only_fields = ["id"]
 
 
 class QuoteClientSerializer(serializers.ModelSerializer):
@@ -24,6 +25,7 @@ class QuoteSerializer(serializers.ModelSerializer):
         write_only=True,
         source="client",
     )
+    status_display = serializers.CharField(source="get_status_display", read_only=True)
     issue_date = serializers.DateField(format="%d-%m-%Y")
     expiry_date = serializers.DateField(format="%d-%m-%Y")
     line_items = QuoteLineItemSerializer(many=True)
@@ -40,6 +42,7 @@ class QuoteSerializer(serializers.ModelSerializer):
             "expiry_date",
             "line_items",
             "status",
+            "status_display",
         ]
         read_only_fields = ["number"]
 

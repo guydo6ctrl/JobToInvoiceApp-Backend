@@ -3,6 +3,8 @@ from .models import ClientItemTemplate
 
 
 class ClientItemTemplateSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ClientItemTemplate
-        fields = ["name", "description", "unit_price", "type"]
+        fields = ["id", "name", "description", "unit_price", "type"]
+        read_only_fields = ["id"]
