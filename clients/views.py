@@ -9,7 +9,17 @@ class ClientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Client.objects.filter(user=self.request.user)
+        queryset = Client.objects.filter(user = self.request.user)
+
+        archived = self.request.query_params.get("archived")
+
+        if archived is not None:
+            if archived.lower() == "true":
+                queryset = queryset.filter(archived=True)
+            elif archived.lower() == "false":
+                queryset = queryset.filter(archived=False)
+
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

@@ -36,6 +36,7 @@ class JobSerializer(serializers.ModelSerializer):
             "date_created",
             "status_display",
             "status",
+            "archived"
         ]
         read_only_fields = ["number", "quote_number"]
 

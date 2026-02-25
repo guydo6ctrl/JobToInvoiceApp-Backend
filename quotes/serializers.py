@@ -43,6 +43,7 @@ class QuoteSerializer(serializers.ModelSerializer):
             "line_items",
             "status",
             "status_display",
+            "archived"
         ]
         read_only_fields = ["number"]
 

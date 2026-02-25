@@ -29,6 +29,7 @@ class Job(models.Model):
         ],
         default="scheduled",
     )
+    archived = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.title} - {self.client.name}"

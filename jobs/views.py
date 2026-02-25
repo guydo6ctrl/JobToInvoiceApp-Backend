@@ -10,7 +10,17 @@ class JobViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Job.objects.filter(client__user=self.request.user)
+        queryset = Job.objects.filter(client__user=self.request.user)
+
+        archived = self.request.query_params.get("archived")
+
+        if archived is not None:
+            if archived.lower() == "true":
+                queryset = queryset.filter(archived=True)
+            elif archived.lower() == "false":
+                queryset = queryset.filter(archived=False)
+
+        return queryset
 
     def perform_create(self, serializer):
         client = serializer.validated_data["client"]

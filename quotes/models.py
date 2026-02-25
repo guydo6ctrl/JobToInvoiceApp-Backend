@@ -20,6 +20,7 @@ class Quote(models.Model):
     status = models.CharField(
         max_length=20, choices=QuoteStatus.choices, default=QuoteStatus.DRAFT
     )
+    archived = models.BooleanField(default=False)
 
 
 class QuoteLineItem(BaseLineItem):
