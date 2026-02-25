@@ -66,3 +66,19 @@ class InvoiceSerializer(serializers.ModelSerializer):
             InvoiceLineItem.objects.create(invoice=invoice, **item_data)
 
         return invoice
+
+    def update(self, instance, validated_data):
+        line_items_data = validated_data.pop("line_items", None)
+
+        # Update quote fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        # Update line items if provided
+        if line_items_data is not None:
+            instance.line_items.all().delete()
+            for item_data in line_items_data:
+                InvoiceLineItem.objects.create(invoice=instance, **item_data)
+
+        return instance

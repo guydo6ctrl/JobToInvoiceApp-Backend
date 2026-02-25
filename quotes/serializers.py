@@ -55,3 +55,19 @@ class QuoteSerializer(serializers.ModelSerializer):
             QuoteLineItem.objects.create(quote=quote, **item_data)
 
         return quote
+
+    def update(self, instance, validated_data):
+        line_items_data = validated_data.pop("line_items", None)
+
+        # Update quote fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        # Update line items if provided
+        if line_items_data is not None:
+            instance.line_items.all().delete()
+            for item_data in line_items_data:
+                QuoteLineItem.objects.create(quote=instance, **item_data)
+
+        return instance
