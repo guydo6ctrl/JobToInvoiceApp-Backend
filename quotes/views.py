@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import PermissionDenied
 from .serializers import QuoteSerializer
 from .models import Quote
@@ -9,8 +9,15 @@ from .models import Quote
 class QuoteViewSet(viewsets.ModelViewSet):
     serializer_class = QuoteSerializer
     permission_classes = [permissions.AllowAny]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
     filterset_fields = ["client", "status"]
+    search_fields = ["number", "client__name", "status"]
+    ordering_fields = ["id", "issue_date", "expiry_date", "created_at"]
+    ordering = ["-id"]
 
     def get_queryset(self):
         queryset = Quote.objects.filter(client__user=self.request.user).select_related(
@@ -29,10 +36,6 @@ class QuoteViewSet(viewsets.ModelViewSet):
         client_id = self.request.query_params.get("client_id")
         if client_id:
             queryset = queryset.filter(client_id=client_id)
-
-        client_name = self.request.query_params.get("client_name")
-        if client_name:
-            queryset = queryset.filter(client__name__icontains=client_name)
 
         return queryset
 

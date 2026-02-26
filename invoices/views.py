@@ -1,14 +1,19 @@
-from django.shortcuts import render
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import PermissionDenied
-from .serializers import InvoiceSerializer
 from .models import Invoice
-from django.db.models import Q
+from .serializers import InvoiceSerializer
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):
     serializer_class = InvoiceSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    search_fields = ["number", "client__name", "status"]
+    ordering_fields = ["id"]
+    ordering = ["-id"]
 
     def get_queryset(self):
         queryset = Invoice.objects.filter(
@@ -22,11 +27,6 @@ class InvoiceViewSet(viewsets.ModelViewSet):
                 queryset = queryset.filter(archived=True)
             elif archived.lower() == "false":
                 queryset = queryset.filter(archived=False)
-
-        client = self.request.query_params.get("client")
-
-        if client:
-            queryset = queryset.filter(Q(client__name__icontains=client))
 
         return queryset
 
