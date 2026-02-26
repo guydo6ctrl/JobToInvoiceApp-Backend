@@ -1,25 +1,40 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied
+from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
 from jobs.serializers import JobSerializer
 from jobs.models import Job
 
 
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["client", "status"]
 
     def get_queryset(self):
-        queryset = Job.objects.filter(client__user=self.request.user)
+        queryset = Job.objects.filter(client__user=self.request.user).select_related(
+            "client"
+        )
 
         archived = self.request.query_params.get("archived")
-
         if archived is not None:
-            if archived.lower() == "true":
+            archived = archived.lower()
+            if archived in ["true", "1"]:
                 queryset = queryset.filter(archived=True)
-            elif archived.lower() == "false":
+            elif archived in ["false", "0"]:
                 queryset = queryset.filter(archived=False)
 
+       
+        client_id = self.request.query_params.get("client_id")
+        if client_id:
+            queryset = queryset.filter(client_id=client_id)
+
+        
+        client_name = self.request.query_params.get("client_name")
+        if client_name:
+            queryset = queryset.filter(client__name__icontains=client_name)
         return queryset
 
     def perform_create(self, serializer):

@@ -13,15 +13,26 @@ class QuoteViewSet(viewsets.ModelViewSet):
     filterset_fields = ["client", "status"]
 
     def get_queryset(self):
-        queryset = Quote.objects.filter(client__user=self.request.user)
+        queryset = Quote.objects.filter(client__user=self.request.user).select_related(
+            "client"
+        )
 
         archived = self.request.query_params.get("archived")
 
         if archived is not None:
-            if archived.lower() == "true":
+            archived = archived.lower()
+            if archived in ["true", "1"]:
                 queryset = queryset.filter(archived=True)
-            elif archived.lower() == "false":
+            elif archived in ["false", "0"]:
                 queryset = queryset.filter(archived=False)
+
+        client_id = self.request.query_params.get("client_id")
+        if client_id:
+            queryset = queryset.filter(client_id=client_id)
+
+        client_name = self.request.query_params.get("client_name")
+        if client_name:
+            queryset = queryset.filter(client__name__icontains=client_name)
 
         return queryset
 
