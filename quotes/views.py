@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from invoices.services import generate_document_pdf
+
 from .serializers import QuoteSerializer
 from .models import Quote
 
@@ -44,3 +50,14 @@ class QuoteViewSet(viewsets.ModelViewSet):
         if client_id.user != self.request.user:
             raise PermissionDenied("Not your client")
         serializer.save()
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def quote_download_view(request, quote_id):
+    quote = get_object_or_404(Quote, id=quote_id, client__user=request.user)
+    pdf_file = generate_document_pdf("quote", Quote)
+
+    response = HttpResponse(pdf_file, content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="Quote-{quote.id}.pdf"'
+    return response

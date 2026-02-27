@@ -9,7 +9,8 @@ from quotes.models import Quote
 class InvoiceLineItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = InvoiceLineItem
-        fields = ["name", "description", "quantity", "unit_price"]
+        fields = ["name", "description", "quantity", "unit_price", "type"]
+        read_only_fields = ["id"]
 
 
 class InvoiceClientSerializer(serializers.ModelSerializer):

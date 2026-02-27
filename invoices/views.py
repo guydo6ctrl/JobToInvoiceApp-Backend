@@ -1,7 +1,12 @@
 from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from .models import Invoice
 from .serializers import InvoiceSerializer
+from .services import generate_document_pdf
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):
@@ -38,3 +43,14 @@ class InvoiceViewSet(viewsets.ModelViewSet):
                 raise PermissionDenied("Not your client")
 
         serializer.save()
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def invoice_download_view(request, invoice_id):
+    invoice = get_object_or_404(Invoice, id=invoice_id, client__user=request.user)
+    pdf_file = generate_document_pdf("invoice", invoice)
+
+    response = HttpResponse(pdf_file, content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="Invoice-{invoice.id}.pdf"'
+    return response

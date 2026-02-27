@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quote</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #1e1e1e;
+        line-height: 1.6;
+      }
+
+      .container {
+        width: 210mm;
+        height: 297mm;
+        padding: 30mm;
+        background-color: white;
+      }
+
+      /* Header */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        border-bottom: 3px solid #10b981;
+        padding-bottom: 25px;
+      }
+
+      .company-info h1 {
+        font-size: 28px;
+        color: #10b981;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      .company-info p {
+        font-size: 12px;
+        color: #666;
+        margin: 3px 0;
+      }
+
+      .quote-title {
+        text-align: right;
+      }
+
+      .quote-title h2 {
+        font-size: 36px;
+        color: #10b981;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .quote-number {
+        font-size: 13px;
+        color: #666;
+        background-color: #f0f0f0;
+        padding: 6px 10px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+
+      /* Info Grid */
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 35px;
+        page-break-inside: avoid;
+      }
+
+      .info-block {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #10b981;
+      }
+
+      .info-block h3 {
+        font-size: 11px;
+        color: #10b981;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .info-block p {
+        font-size: 13px;
+        color: #1e1e1e;
+        margin: 4px 0;
+      }
+
+      .info-block strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 14px;
+      }
+
+      /* Table */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px 0;
+        page-break-inside: avoid;
+      }
+
+      thead {
+        background-color: #10b981;
+      }
+
+      th {
+        color: white;
+        padding: 12px 10px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #e5e5e5;
+        font-size: 13px;
+        color: #1e1e1e;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 2px solid #10b981;
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      /* Totals Section */
+      .totals-section {
+        display: flex;
+        justify-content: flex-end;
+        margin: 30px 0;
+        page-break-inside: avoid;
+      }
+
+      .totals-box {
+        width: 280px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 6px;
+        border-left: 4px solid #10b981;
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+
+      .total-row.grand-total {
+        border-top: 2px solid #10b981;
+        padding-top: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #10b981;
+      }
+
+      /* Notes/Footer */
+      .footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e5e5;
+        font-size: 12px;
+        color: #666;
+        page-break-inside: avoid;
+      }
+
+      .footer p {
+        margin: 5px 0;
+      }
+
+      .footer-note {
+        background-color: #f9f9f9;
+        padding: 12px;
+        border-radius: 4px;
+        margin: 10px 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .badge-valid {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <div class="company-info">
+          <h1>TradeInvoice</h1>
+          <p>hello@tradeinvoice.com</p>
+          <p>+44 (0) 123 456 7890</p>
+          <p>123 Business Street, London, UK</p>
+        </div>
+        <div class="quote-title">
+          <h2>QUOTE</h2>
+          <div class="quote-number">#Q-2026-0001</div>
+        </div>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="info-grid">
+        <div class="info-block">
+          <h3>Quote For</h3>
+          <strong>John Smith</strong>
+          <p>john.smith@email.com</p>
+          <p>+44 (0) 789 123 4567</p>
+          <p>123 Client Street<br />London, UK<br />SW1A 1AA</p>
+        </div>
+
+        <div class="info-block">
+          <h3>Quote Details</h3>
+          <p><strong>Issue Date:</strong><br />25 February 2026</p>
+          <p><strong>Expiry Date:</strong><br />27 April 2026</p>
+          <p>
+            <strong>Status:</strong><br />
+            <span class="badge badge-valid">Valid</span>
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h3>Description</h3>
+          <p>
+            Professional installation and setup of premium fixtures with full
+            site cleanup and project management.
+          </p>
+        </div>
+      </div>
+
+      <!-- Line Items Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th class="text-center" style="width: 80px">Quantity</th>
+            <th class="text-right" style="width: 100px">Unit Price</th>
+            <th class="text-right" style="width: 100px">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Professional Installation Services</td>
+            <td class="text-center">4</td>
+            <td class="text-right">£75.00</td>
+            <td class="text-right">£300.00</td>
+          </tr>
+          <tr>
+            <td>Materials - Premium Fixtures</td>
+            <td class="text-center">2</td>
+            <td class="text-right">£150.00</td>
+            <td class="text-right">£300.00</td>
+          </tr>
+          <tr>
+            <td>Labour - Project Management</td>
+            <td class="text-center">1</td>
+            <td class="text-right">£200.00</td>
+            <td class="text-right">£200.00</td>
+          </tr>
+          <tr>
+            <td>Misc - Site Cleanup</td>
+            <td class="text-center">1</td>
+            <td class="text-right">£50.00</td>
+            <td class="text-right">£50.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Totals -->
+      <div class="totals-section">
+        <div class="totals-box">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span>£850.00</span>
+          </div>
+          <div class="total-row">
+            <span>VAT (20%):</span>
+            <span>£170.00</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Total Price:</span>
+            <span>£1,020.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <div class="footer-note">
+          <strong>Validity:</strong> This quote is valid for 60 days from the
+          issue date. Prices are subject to change if project scope changes or
+          materials are not available as specified.
+        </div>
+        <p>
+          <strong>Next Steps:</strong> To proceed with this quote, please reply
+          with your acceptance. Once accepted, we will schedule the project and
+          provide you with a detailed timeline.
+        </p>
+        <p style="margin-top: 15px; color: #999">
+          TradeInvoice © 2026 | All rights reserved | Page 1 of 1
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
