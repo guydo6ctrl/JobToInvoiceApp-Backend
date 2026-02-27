@@ -15,6 +15,11 @@ class BaseLineItem(models.Model):
     type = models.CharField(
         max_length=20, choices=LineItemType.choices, default=LineItemType.MATERIALS
     )
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def save(self, *args, **kwargs):
+        self.total = (self.quantity or 0) * (self.unit_price or 0)
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True

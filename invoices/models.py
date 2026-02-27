@@ -34,7 +34,14 @@ class Invoice(models.Model):
     status = models.CharField(
         max_length=20, choices=InvoiceStatus.choices, default=InvoiceStatus.DRAFT
     )
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_due = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     archived = models.BooleanField(default=False)
+
+    def update_invoice_totals(self):
+        self.subtotal = sum(item.total for item in self.line_items.all())
+        self.total_due = float(self.subtotal) + (float(self.subtotal) * 0.2)
+        self.save()
 
 
 class InvoiceLineItem(BaseLineItem):

@@ -8,7 +8,7 @@ from .models import Quote, QuoteLineItem
 class QuoteLineItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuoteLineItem
-        fields = ["id", "name", "description", "quantity", "unit_price"]
+        fields = ["id", "name", "description", "quantity", "unit_price", "type"]
         read_only_fields = ["id"]
 
 
@@ -43,7 +43,7 @@ class QuoteSerializer(serializers.ModelSerializer):
             "line_items",
             "status",
             "status_display",
-            "archived"
+            "archived",
         ]
         read_only_fields = ["number"]
 
@@ -57,6 +57,8 @@ class QuoteSerializer(serializers.ModelSerializer):
 
         for item_data in line_items_data:
             QuoteLineItem.objects.create(quote=quote, **item_data)
+
+        quote.update_quote_totals()
 
         return quote
 
@@ -73,5 +75,7 @@ class QuoteSerializer(serializers.ModelSerializer):
             instance.line_items.all().delete()
             for item_data in line_items_data:
                 QuoteLineItem.objects.create(quote=instance, **item_data)
+
+        instance.update_quote_totals()
 
         return instance

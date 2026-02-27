@@ -69,6 +69,8 @@ class InvoiceSerializer(serializers.ModelSerializer):
         for item_data in line_items_data:
             InvoiceLineItem.objects.create(invoice=invoice, **item_data)
 
+        invoice.update_invoice_totals()
+
         return invoice
 
     def update(self, instance, validated_data):
@@ -84,5 +86,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             instance.line_items.all().delete()
             for item_data in line_items_data:
                 InvoiceLineItem.objects.create(invoice=instance, **item_data)
+
+        instance.update_invoice_totals()
 
         return instance
