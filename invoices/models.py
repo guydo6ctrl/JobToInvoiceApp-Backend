@@ -17,7 +17,7 @@ class Invoice(models.Model):
     client = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name="invoices"
     )
-    date_created = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(blank=True)
     job = models.ForeignKey(
         Job, on_delete=models.SET_NULL, null=True, blank=True, related_name="invoices"
     )
@@ -30,6 +30,7 @@ class Invoice(models.Model):
     )
     due_date = models.DateField()
     issue_date = models.DateField()
+    date_created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=20, choices=InvoiceStatus.choices, default=InvoiceStatus.DRAFT
     )

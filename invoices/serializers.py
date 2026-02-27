@@ -44,6 +44,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "number",
             "client",
             "client_id",
+            "description",
             "job",
             "job_number",
             "source_quote",
