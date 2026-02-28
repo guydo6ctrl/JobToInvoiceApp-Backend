@@ -20,6 +20,8 @@ class Invoice(models.Model):
         Client, on_delete=models.CASCADE, related_name="invoices"
     )
     description = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
+    payment_instructions = models.TextField(blank=True)
     job = models.ForeignKey(
         Job, on_delete=models.SET_NULL, null=True, blank=True, related_name="invoices"
     )
