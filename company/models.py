@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from config import settings
 
@@ -9,6 +11,8 @@ class CompanyDetails(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=50, blank=True)
+
+    is_vat_registered = models.BooleanField(default=True)
 
     address_line = models.TextField(max_length=100, blank=True)
 

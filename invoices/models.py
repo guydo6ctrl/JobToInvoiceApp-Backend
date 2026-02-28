@@ -1,8 +1,10 @@
 from django.db import models
 from jobs.models import Job
 from core.models import BaseLineItem
+from company.models import CompanyDetails
 from clients.models import Client
 from quotes.models import Quote
+from decimal import Decimal
 
 
 class InvoiceStatus(models.TextChoices):
@@ -35,12 +37,37 @@ class Invoice(models.Model):
         max_length=20, choices=InvoiceStatus.choices, default=InvoiceStatus.DRAFT
     )
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    total_due = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    vat_rate = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        choices=[
+            (Decimal("0.00"), "0%"),
+            (Decimal("5.00"), "5%"),
+            (Decimal("20.00"), "20%"),
+        ],
+        default=Decimal("20.00"),
+    )
+
     archived = models.BooleanField(default=False)
+
+    @property
+    def vat_amount(self):
+        if not self.client.user.company.is_vat_registered:
+            return Decimal("0.00")
+        return (self.subtotal * self.vat_rate / Decimal("100")).quantize(
+            Decimal("0.01")
+        )
+
+    @property
+    def total_due(self):
+        return f"{self.subtotal * self.vat_rate:.2f}"
+
+    @property
+    def vat_display(self):
+        return int(self.vat_rate)
 
     def update_invoice_totals(self):
         self.subtotal = sum(item.total for item in self.line_items.all())
-        self.total_due = float(self.subtotal) + (float(self.subtotal) * 0.2)
         self.save()
 
 

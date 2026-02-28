@@ -34,6 +34,9 @@ class InvoiceSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
     status_display = serializers.CharField(source="get_status_display", read_only=True)
+    vat_rate_display = serializers.CharField(
+        source="get_vat_rate_display", read_only=True
+    )
     issue_date = serializers.DateField(format="%d-%m-%Y")
     due_date = serializers.DateField(format="%d-%m-%Y")
     line_items = InvoiceLineItemSerializer(many=True)
@@ -52,11 +55,16 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "issue_date",
             "due_date",
             "line_items",
-            "status",
+            "subtotal",
+            "vat_rate",
+            "vat_rate_display",
             "status_display",
+            "status",
             "archived",
         ]
-        read_only_fields = ["number"]
+        read_only_fields = [
+            "number",
+        ]
 
     def create(self, validated_data):
 
