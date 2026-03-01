@@ -22,7 +22,6 @@
         --bg: #ffffff;
         --off: #f8f8f8;
         --blue: #2563eb;
-        --blue-dim: #eff3ff;
       }
 
       body {
@@ -41,17 +40,15 @@
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
       }
 
-      /* Top rule */
       .top-rule {
         height: 3px;
         background: var(--blue);
       }
-
       .inner {
         padding: 28px 32px 32px;
       }
 
-      /* ── Header ── */
+      /* Header */
       .header {
         display: flex;
         justify-content: space-between;
@@ -75,7 +72,6 @@
         font-size: 11.5px;
         color: var(--mid);
         line-height: 1.85;
-        font-weight: 400;
       }
 
       .invoice-right {
@@ -100,7 +96,7 @@
         letter-spacing: -0.5px;
       }
 
-      /* ── Info row ── */
+      /* Info row */
       .info-row {
         display: grid;
         grid-template-columns: 1.3fr 1fr 1fr;
@@ -134,7 +130,6 @@
         font-size: 11.5px;
         color: var(--mid);
         line-height: 1.75;
-        font-weight: 400;
       }
 
       .info-pair {
@@ -156,7 +151,7 @@
         color: var(--dark);
       }
 
-      /* ── Table ── */
+      /* Table */
       table {
         width: 100%;
         border-collapse: collapse;
@@ -214,25 +209,37 @@
         display: block;
         margin-top: 1px;
       }
+      .td-desc {
+        font-size: 11px;
+        color: var(--mid);
+        display: block;
+        margin-top: 2px;
+      }
 
-      /* ── Bottom ── */
+      /* Bottom */
       .bottom {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 20px;
+        gap: 16px;
         margin-bottom: 28px;
       }
 
-      .payment-box {
+      .bottom-left {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
         flex: 1;
+      }
+
+      .info-box {
         background: var(--off);
         border: 1px solid var(--rule);
         border-radius: 4px;
-        padding: 16px;
+        padding: 14px 16px;
       }
 
-      .payment-label {
+      .info-box-label {
         font-size: 9px;
         font-weight: 700;
         letter-spacing: 2px;
@@ -241,12 +248,38 @@
         margin-bottom: 7px;
       }
 
-      .payment-text {
+      .info-box-text {
         font-size: 11.5px;
         color: var(--mid);
         line-height: 1.75;
       }
 
+      /* Payment table */
+      .payment-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 4px;
+      }
+
+      .payment-key {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: var(--mid);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        padding: 4px 12px 4px 0;
+        width: 42%;
+        vertical-align: top;
+      }
+
+      .payment-val {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--dark);
+        padding: 4px 0;
+      }
+
+      /* Totals */
       .totals {
         width: 210px;
         flex-shrink: 0;
@@ -290,7 +323,7 @@
         color: #fff;
       }
 
-      /* ── Footer ── */
+      /* Footer */
       .footer {
         border-top: 1px solid var(--rule);
         padding-top: 16px;
@@ -308,7 +341,6 @@
         color: var(--dark);
         font-weight: 600;
       }
-
       .footer-copy {
         font-size: 10px;
         color: var(--muted);
@@ -320,7 +352,6 @@
         size: A4;
         margin: 0;
       }
-
       @media print {
         body {
           background: white;
@@ -401,10 +432,11 @@
         <table>
           <thead>
             <tr>
-              <th>Description</th>
-              <th class="c" style="width: 65px">Qty</th>
-              <th class="r" style="width: 95px">Unit Price</th>
-              <th class="r" style="width: 95px">Total</th>
+              <th>Item</th>
+              <th class="c" style="width: 120px">Description</th>
+              <th class="c" style="width: 55px">Qty</th>
+              <th class="r" style="width: 90px">Unit Price</th>
+              <th class="r" style="width: 90px">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -414,6 +446,7 @@
                 <span class="td-name">{{ item.name }}</span>
                 <span class="td-type">{{ item.type }}</span>
               </td>
+              <td class="c">{{ item.description }}</td>
               <td class="c">{{ item.quantity }}</td>
               <td class="r">£{{ item.unit_price }}</td>
               <td class="r">£{{ item.total }}</td>
@@ -424,12 +457,23 @@
 
         <!-- Bottom -->
         <div class="bottom">
-          <div class="payment-box">
-            <div class="payment-label">Payment Details</div>
-            <div class="payment-text">
-              {{ invoice.client.user.banks.payment_instructions }}
+          <div class="bottom-left">
+            <!-- Notes -->
+            <div class="info-box">
+              <div class="info-box-label">Notes</div>
+              <div class="info-box-text">{{ invoice.notes }}</div>
+            </div>
+
+            <!-- Payment Details -->
+            <div class="info-box">
+              <div class="info-box-label">Payment Details</div>
+              <div class="info-box-text">
+                {{ invoice.payment_instructions }}
+              </div>
             </div>
           </div>
+
+          <!-- Totals -->
           <div class="totals">
             <div class="t-row">
               <span>Subtotal</span>

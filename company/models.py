@@ -12,6 +12,13 @@ class CompanyDetails(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=50, blank=True)
 
+    payment_instructions = models.TextField(
+        blank=True, help_text="Optional instructions for clients"
+    )
+    quote_terms = models.TextField(
+        blank=True, help_text="Optional quoting terms for clients"
+    )
+
     is_vat_registered = models.BooleanField(default=True)
 
     address_line = models.TextField(max_length=100, blank=True)
@@ -28,9 +35,7 @@ class BankDetails(models.Model):
     bank_name = models.CharField(max_length=255, blank=True)
     account_number = models.CharField(max_length=50, blank=True)
     sort_code = models.CharField(max_length=20, blank=True)
-    payment_instructions = models.TextField(
-        blank=True, help_text="Optional instructions for clients"
-    )
+
     is_default = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

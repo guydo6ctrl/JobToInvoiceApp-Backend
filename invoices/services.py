@@ -5,7 +5,7 @@ from io import BytesIO
 
 def generate_document_pdf(document_type, document):
     template = get_template(f"{document_type}s/{document_type}_pdf.html")
-    html_string = template.render({"invoice": document})
+    html_string = template.render({f"{document_type}": document})
 
     pdf_file = BytesIO()
     HTML(string=html_string).write_pdf(pdf_file)

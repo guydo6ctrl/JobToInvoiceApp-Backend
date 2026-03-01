@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from clients.models import Client
 from core.models import BaseLineItem
@@ -17,12 +19,42 @@ class Quote(models.Model):
     description = models.TextField(blank=True)
     issue_date = models.DateField()
     expiry_date = models.DateField()
+    notes = models.TextField(blank=True)
+    quote_terms = models.TextField(blank=True)
+    vat_rate = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        choices=[
+            (Decimal("0.00"), "0%"),
+            (Decimal("5.00"), "5%"),
+            (Decimal("20.00"), "20%"),
+        ],
+        default=Decimal("20.00"),
+    )
+
     status = models.CharField(
         max_length=20, choices=QuoteStatus.choices, default=QuoteStatus.DRAFT
     )
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_due = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     archived = models.BooleanField(default=False)
+
+    @property
+    def vat_amount(self):
+        if not self.client.user.company.is_vat_registered:
+            return Decimal("0.00")
+        return (self.subtotal * self.vat_rate / Decimal("100")).quantize(
+            Decimal("0.01")
+        )
+
+    @property
+    def quote_total(self):
+        total = self.subtotal + self.vat_amount
+        return f"{total:.2f}"
+
+    @property
+    def vat_display(self):
+        return int(self.vat_rate)
 
     def update_quote_totals(self):
         self.subtotal = sum(item.total for item in self.line_items.all())

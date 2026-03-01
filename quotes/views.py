@@ -56,7 +56,7 @@ class QuoteViewSet(viewsets.ModelViewSet):
 @permission_classes([IsAuthenticated])
 def quote_download_view(request, quote_id):
     quote = get_object_or_404(Quote, id=quote_id, client__user=request.user)
-    pdf_file = generate_document_pdf("quote", Quote)
+    pdf_file = generate_document_pdf("quote", quote)
 
     response = HttpResponse(pdf_file, content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="Quote-{quote.id}.pdf"'

@@ -10,6 +10,8 @@ class CompanyDetailsSerializer(serializers.ModelSerializer):
             "name",
             "email",
             "phone",
+            "payment_instructions",
+            "quote_terms",
             "is_vat_registered",
             "address_line",
             "town_or_city",
@@ -27,7 +29,6 @@ class BankDetailsSerializer(serializers.ModelSerializer):
             "bank_name",
             "account_number",
             "sort_code",
-            "payment_instructions",
             "is_default",
         ]
         read_only_fields = ["id"]

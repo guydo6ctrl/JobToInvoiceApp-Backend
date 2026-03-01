@@ -29,6 +29,13 @@ class QuoteSerializer(serializers.ModelSerializer):
     issue_date = serializers.DateField(format="%d-%m-%Y")
     expiry_date = serializers.DateField(format="%d-%m-%Y")
     line_items = QuoteLineItemSerializer(many=True)
+    vat_rate = serializers.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+    )
+    vat_rate_display = serializers.CharField(
+        source="get_vat_rate_display", read_only=True
+    )
 
     class Meta:
         model = Quote
@@ -41,6 +48,10 @@ class QuoteSerializer(serializers.ModelSerializer):
             "issue_date",
             "expiry_date",
             "line_items",
+            "vat_rate",
+            "vat_rate_display",
+            "quote_terms",
+            "notes",
             "status",
             "status_display",
             "archived",

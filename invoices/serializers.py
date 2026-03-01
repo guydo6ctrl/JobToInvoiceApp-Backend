@@ -34,6 +34,10 @@ class InvoiceSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
     status_display = serializers.CharField(source="get_status_display", read_only=True)
+    vat_rate = serializers.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+    )
     vat_rate_display = serializers.CharField(
         source="get_vat_rate_display", read_only=True
     )
@@ -60,6 +64,8 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "vat_rate_display",
             "status_display",
             "status",
+            "notes",
+            "payment_instructions",
             "archived",
         ]
         read_only_fields = [

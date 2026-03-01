@@ -62,7 +62,8 @@ class Invoice(models.Model):
 
     @property
     def total_due(self):
-        return f"{self.subtotal * self.vat_rate:.2f}"
+        total = self.subtotal + self.vat_amount
+        return f"{total:.2f}"
 
     @property
     def vat_display(self):
