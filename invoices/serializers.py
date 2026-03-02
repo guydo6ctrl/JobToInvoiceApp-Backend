@@ -21,6 +21,7 @@ class InvoiceClientSerializer(serializers.ModelSerializer):
 
 class InvoiceSerializer(serializers.ModelSerializer):
     job_number = serializers.CharField(source="job.number", read_only=True)
+    quote_number = serializers.CharField(source="source_quote.number", read_only=True)
 
     client = InvoiceClientSerializer(read_only=True)
     client_id = serializers.PrimaryKeyRelatedField(
@@ -56,6 +57,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "job",
             "job_number",
             "source_quote",
+            "quote_number",
             "issue_date",
             "due_date",
             "line_items",

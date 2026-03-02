@@ -6,6 +6,8 @@ from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+
+from core.pagination import DataPagination
 from invoices.services import generate_document_pdf
 
 from .serializers import QuoteSerializer
@@ -15,6 +17,7 @@ from .models import Quote
 class QuoteViewSet(viewsets.ModelViewSet):
     serializer_class = QuoteSerializer
     permission_classes = [permissions.AllowAny]
+    pagination_class = DataPagination
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -22,7 +25,7 @@ class QuoteViewSet(viewsets.ModelViewSet):
     ]
     filterset_fields = ["client", "status"]
     search_fields = ["number", "client__name", "status"]
-    ordering_fields = ["id", "issue_date", "expiry_date", "created_at"]
+    ordering_fields = ["id", "issue_date", "expiry_date", "date_created"]
     ordering = ["-id"]
 
     def get_queryset(self):

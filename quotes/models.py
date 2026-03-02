@@ -8,8 +8,8 @@ from core.models import BaseLineItem
 class QuoteStatus(models.TextChoices):
     DRAFT = "draft", "Draft"
     SENT = "sent", "Sent"
-    PAID = "accepted", "Accepted"
-    CANCELLED = "rejected", "Rejected"
+    ACCEPTED = "accepted", "Accepted"
+    REJECTED = "rejected", "Rejected"
 
 
 class Quote(models.Model):

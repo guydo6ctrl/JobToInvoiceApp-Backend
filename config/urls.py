@@ -16,4 +16,5 @@ urlpatterns = [
     path("quotes/", include("quotes.urls")),
     path("templates/", include("templates.urls")),
     path("company/", include("company.urls")),
+    path("dashboard/", include("dashboard.urls")),
 ]

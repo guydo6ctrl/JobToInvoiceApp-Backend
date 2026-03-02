@@ -4,6 +4,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+
+from core.pagination import DataPagination
 from .models import Invoice
 from .serializers import InvoiceSerializer
 from .services import generate_document_pdf
@@ -12,12 +14,13 @@ from .services import generate_document_pdf
 class InvoiceViewSet(viewsets.ModelViewSet):
     serializer_class = InvoiceSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = DataPagination
     filter_backends = [
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
     search_fields = ["number", "client__name", "status"]
-    ordering_fields = ["id"]
+    ordering_fields = ["id", "date_created"]
     ordering = ["-id"]
 
     def get_queryset(self):
