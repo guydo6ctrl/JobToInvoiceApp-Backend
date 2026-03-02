@@ -52,6 +52,7 @@ class QuoteSerializer(serializers.ModelSerializer):
             "vat_rate_display",
             "quote_terms",
             "notes",
+            "quote_total",
             "status",
             "status_display",
             "archived",

@@ -62,6 +62,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "due_date",
             "line_items",
             "subtotal",
+            "total_due",
             "vat_rate",
             "vat_rate_display",
             "status_display",

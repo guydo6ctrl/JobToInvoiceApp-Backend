@@ -24,9 +24,7 @@ def dashboard_stats(request):
 
     # Outstanding — sent but not paid
     outstanding = invoices.filter(status=InvoiceStatus.SENT)
-    outstanding_amount = outstanding.aggregate(total=Sum("subtotal"))[
-        "total"
-    ] or Decimal("0.00")
+    
 
     # Add VAT to outstanding amount
     outstanding_total = sum(Decimal(inv.total_due) for inv in outstanding)
