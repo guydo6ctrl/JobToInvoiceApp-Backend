@@ -43,9 +43,12 @@ class BankDetails(models.Model):
     is_default = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+        if not BankDetails.objects.filter(user=self.user, is_default=True).exists():
+            self.is_default = True
+
         super().save(*args, **kwargs)
 
-        # Then update other records
+        # When updating default payments
         if self.is_default:
             BankDetails.objects.filter(user=self.user, is_default=True).exclude(
                 id=self.id

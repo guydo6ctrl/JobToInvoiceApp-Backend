@@ -25,6 +25,12 @@ class QuoteSerializer(serializers.ModelSerializer):
         write_only=True,
         source="client",
     )
+    bank_name = serializers.CharField(
+        source="payment_details.bank_name", read_only=True
+    )
+    account_number = serializers.CharField(
+        source="payment_details.account_number", read_only=True
+    )
     status_display = serializers.CharField(source="get_status_display", read_only=True)
     issue_date = serializers.DateField(format="%d-%m-%Y")
     expiry_date = serializers.DateField(format="%d-%m-%Y")
@@ -53,6 +59,9 @@ class QuoteSerializer(serializers.ModelSerializer):
             "quote_terms",
             "notes",
             "quote_total",
+            "payment_details",
+            "bank_name",
+            "account_number",
             "status",
             "status_display",
             "archived",

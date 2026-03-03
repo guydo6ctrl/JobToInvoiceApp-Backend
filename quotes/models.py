@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.db import models
+from company.models import BankDetails
 from clients.models import Client
 from core.models import BaseLineItem
 
@@ -15,6 +16,13 @@ class QuoteStatus(models.TextChoices):
 class Quote(models.Model):
     number = models.CharField(max_length=20, db_index=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="quotes")
+    payment_details = models.ForeignKey(
+        BankDetails,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="quotes",
+    )
     date_created = models.DateTimeField(auto_now_add=True)
     description = models.TextField(blank=True)
     issue_date = models.DateField()

@@ -464,11 +464,23 @@
               <div class="info-box-text">{{ invoice.notes }}</div>
             </div>
 
+            <!-- Payment Instructions -->
+            <div class="info-box">
+              <div class="info-box-label">Payment Instructions</div>
+              <div class="info-box-text">
+                {{ invoice.client.user.company.payment_instructions }}
+              </div>
+            </div>
+
             <!-- Payment Details -->
             <div class="info-box">
               <div class="info-box-label">Payment Details</div>
               <div class="info-box-text">
-                {{ invoice.payment_instructions }}
+                <p>Bank Name: {{ invoice.payment_details.bank_name }}</p>
+                <p>
+                  Account Number: {{invoice.payment_details.account_number }}
+                </p>
+                <p>Sort Code: {{invoice.payment_details.sort_code }}</p>
               </div>
             </div>
           </div>
@@ -480,7 +492,7 @@
               <span>£{{ invoice.subtotal }}</span>
             </div>
             <div class="t-row">
-              {% if invoice.company.is_vat_registered %}
+              {% if invoice.client.user.company.is_vat_registered %}
               <span>VAT ({{ invoice.vat_display }}%)</span>
               <span>£{{ invoice.vat_amount }}</span>
               {% endif %}

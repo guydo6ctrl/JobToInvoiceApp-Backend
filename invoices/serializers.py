@@ -22,6 +22,12 @@ class InvoiceClientSerializer(serializers.ModelSerializer):
 class InvoiceSerializer(serializers.ModelSerializer):
     job_number = serializers.CharField(source="job.number", read_only=True)
     quote_number = serializers.CharField(source="source_quote.number", read_only=True)
+    bank_name = serializers.CharField(
+        source="payment_details.bank_name", read_only=True
+    )
+    account_number = serializers.CharField(
+        source="payment_details.account_number", read_only=True
+    )
 
     client = InvoiceClientSerializer(read_only=True)
     client_id = serializers.PrimaryKeyRelatedField(
@@ -69,6 +75,9 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "status",
             "notes",
             "payment_instructions",
+            "payment_details",
+            "bank_name",
+            "account_number",
             "archived",
         ]
         read_only_fields = [

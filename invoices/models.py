@@ -1,7 +1,7 @@
 from django.db import models
 from jobs.models import Job
 from core.models import BaseLineItem
-from company.models import CompanyDetails
+from company.models import BankDetails, CompanyDetails
 from clients.models import Client
 from quotes.models import Quote
 from decimal import Decimal
@@ -22,6 +22,13 @@ class Invoice(models.Model):
     description = models.TextField(blank=True)
     notes = models.TextField(blank=True)
     payment_instructions = models.TextField(blank=True)
+    payment_details = models.ForeignKey(
+        BankDetails,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="invoices",
+    )
     job = models.ForeignKey(
         Job, on_delete=models.SET_NULL, null=True, blank=True, related_name="invoices"
     )

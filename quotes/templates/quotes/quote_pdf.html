@@ -440,6 +440,14 @@
               <div class="info-box-label">Quote Terms</div>
               <div class="info-box-text">{{ quote.quote_terms }}</div>
             </div>
+            <div class="info-box">
+              <div class="info-box-label">Payment Details</div>
+              <div class="info-box-text">
+                <p>Bank Name: {{ quote.payment_details.bank_name }}</p>
+                <p>Account Number: {{quote.payment_details.account_number }}</p>
+                <p>Sort Code: {{quote.payment_details.sort_code }}</p>
+              </div>
+            </div>
           </div>
 
           <!-- Totals -->
@@ -449,7 +457,7 @@
               <span>£{{ quote.subtotal }}</span>
             </div>
             <div class="t-row">
-              {% if quote.company.is_vat_registered %}
+              {% if quote.client.user.company.is_vat_registered %}
               <span>VAT ({{ quote.vat_display }}%)</span>
               <span>£{{ quote.vat_amount }}</span>
               {% endif %}
@@ -468,7 +476,7 @@
             Questions about this quote? Get in touch straight away.
           </div>
           <div class="footer-copy">
-            TradeInvoice &copy; 2026<br />Page 1 of 1
+            {{quote.client.user.company.name}} &copy; 2026<br />Page 1 of 1
           </div>
         </div>
       </div>
