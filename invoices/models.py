@@ -15,7 +15,7 @@ class InvoiceStatus(models.TextChoices):
 
 
 class Invoice(models.Model):
-    number = models.CharField(max_length=20, unique=True, db_index=True)
+    number = models.CharField(max_length=20, db_index=True)
     client = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name="invoices"
     )

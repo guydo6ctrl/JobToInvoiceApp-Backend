@@ -449,8 +449,10 @@
               <span>£{{ quote.subtotal }}</span>
             </div>
             <div class="t-row">
+              {% if quote.company.is_vat_registered %}
               <span>VAT ({{ quote.vat_display }}%)</span>
               <span>£{{ quote.vat_amount }}</span>
+              {% endif %}
             </div>
             <div class="t-row grand">
               <span>Quote Total</span>

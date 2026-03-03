@@ -26,6 +26,10 @@ class CompanyDetails(models.Model):
     town_or_city = models.TextField(max_length=100, blank=True)
     postcode = models.TextField(max_length=20, blank=True)
     country = models.TextField(max_length=80, blank=True, default="United Kingdom")
+    quote_sequence = models.PositiveIntegerField(default=0)
+    job_sequence = models.PositiveIntegerField(default=0)
+    invoice_sequence = models.PositiveIntegerField(default=0)
+    sequence_year = models.PositiveIntegerField(null=True, blank=True)
 
 
 class BankDetails(models.Model):

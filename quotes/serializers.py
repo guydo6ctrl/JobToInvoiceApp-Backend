@@ -61,9 +61,12 @@ class QuoteSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
+        request = self.context["request"]
+        company = request.user.company
+
         line_items_data = validated_data.pop("line_items", [])
 
-        validated_data["number"] = generate_quote_number()
+        validated_data["number"] = generate_quote_number(company)
 
         quote = Quote.objects.create(**validated_data)
 

@@ -480,8 +480,10 @@
               <span>£{{ invoice.subtotal }}</span>
             </div>
             <div class="t-row">
+              {% if invoice.company.is_vat_registered %}
               <span>VAT ({{ invoice.vat_display }}%)</span>
               <span>£{{ invoice.vat_amount }}</span>
+              {% endif %}
             </div>
             <div class="t-row grand">
               <span>Total Due</span>

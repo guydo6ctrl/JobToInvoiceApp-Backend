@@ -1,8 +1,18 @@
 from django.utils import timezone
-from .models import Job
+from django.db import transaction
 
 
-def generate_job_number():
-    year = timezone.now().year
-    count = Job.objects.filter(date_created__year=year).count() + 1
-    return f"J-{year}-{count:04d}"
+def generate_job_number(company):
+    current_year = timezone.now().year
+
+    with transaction.atomic():
+
+        # Reset sequence if new year
+        if company.sequence_year != current_year:
+            company.job_sequence = 0
+            company.sequence_year = current_year
+
+        company.job_sequence += 1
+        company.save(update_fields=["job_sequence", "sequence_year"])
+
+        return f"J-{current_year}-{company.job_sequence:04d}"

@@ -36,12 +36,15 @@ class JobSerializer(serializers.ModelSerializer):
             "date_created",
             "status_display",
             "status",
-            "archived"
+            "archived",
         ]
         read_only_fields = ["number", "quote_number"]
 
     def create(self, validated_data):
-        validated_data["number"] = generate_job_number()
+        request = self.context["request"]
+        company = request.user.company
+
+        validated_data["number"] = generate_job_number(company)
 
         job = Job.objects.create(**validated_data)
 
