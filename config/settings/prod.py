@@ -1,3 +1,5 @@
+import dj_database_url
+
 from .common import *
 
 DEBUG = False
@@ -17,3 +19,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
+
+DATABASE_URL = "postgresql://jobtoinvoiceapp_db_user:7Mfw5Q8OGDLGls97kmfx3aj8QqLYMakX@dpg-d6k0ncua2pns738119c0-a.oregon-postgres.render.com/jobtoinvoiceapp_db"
+
+DATABASES = {"default": dj_database_url.config(default=os.getenv("DATABASE_URL"))}
