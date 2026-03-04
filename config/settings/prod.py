@@ -18,6 +18,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://jobtoinvoiceapp-frontend.vercel.app",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOW_ALL_ORIGINS = False
 
 
