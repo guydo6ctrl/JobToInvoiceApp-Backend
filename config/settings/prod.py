@@ -15,7 +15,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # CORS - restrict to frontend domain
 CORS_ALLOWED_ORIGINS = [
-    "https://jobtoinvoiceapp-frontend.onrender.com",
+    "https://jobtoinvoiceapp-frontend.vercel.app",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
