@@ -20,7 +20,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 DATABASES = {"default": dj_database_url.config(default=os.getenv("DATABASE_URL"))}
