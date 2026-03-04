@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from django.db import models
-from config import settings
+from django.conf import settings
 
 
 class CompanyDetails(models.Model):

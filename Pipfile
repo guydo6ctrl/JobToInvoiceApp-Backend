@@ -17,6 +17,9 @@ pytz = "*"
 sqlparse = "*"
 django-filter = "*"
 weasyprint = "*"
+gunicorn = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
