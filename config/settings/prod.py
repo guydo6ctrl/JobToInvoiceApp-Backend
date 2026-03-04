@@ -4,7 +4,7 @@ from .common import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = ["jobtoinvoiceapp-backend.onrender.com"]
 
 # Security settings
 SECURE_SSL_REDIRECT = True
