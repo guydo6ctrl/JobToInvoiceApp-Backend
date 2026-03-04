@@ -16,7 +16,7 @@ CSRF_COOKIE_SECURE = True
 
 # CORS - restrict to frontend domain
 CORS_ALLOWED_ORIGINS = [
-    "https://jobtoinvoiceapp-frontend.vercel.app",
+    "https://job-to-invoice-app-frontend.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
