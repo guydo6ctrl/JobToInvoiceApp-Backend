@@ -7,14 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jobs', '0002_remove_job_completed_job_source_quote_job_status'),
+        ("jobs", "0002_remove_job_completed_job_source_quote_job_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='number',
-            field=models.CharField(db_index=True, default=django.utils.timezone.now, max_length=20, unique=True),
+            model_name="job",
+            name="number",
+            field=models.CharField(
+                db_index=True, default="J-0000-000", max_length=20, unique=True
+            ),
             preserve_default=False,
         ),
     ]
