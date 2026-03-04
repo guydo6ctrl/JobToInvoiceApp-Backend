@@ -15,7 +15,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # CORS - restrict to frontend domain
 CORS_ALLOWED_ORIGINS = [
-    "https://localhost:5173/",
+    "https://jobtoinvoiceapp-frontend.onrender.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
